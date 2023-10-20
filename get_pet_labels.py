@@ -35,44 +35,57 @@ def get_pet_labels(image_dir):
   and with leading and trailing whitespace characters stripped from them.
   (ex. filename = 'Boston_terrier_02259.jpg' Pet label = 'boston terrier')
   Parameters:
-   image_dir - The (full) path to the folder of images that are to be
-                 classified by the classifier function (string)
+  image_dir - The (full) path to the folder of images that are to be
+  classified by the classifier function (string)
   Returns:
-        results_dic - Dictionary with 'key' as image filename and 'value' as a 
-                 List. The list contains for following item:
-           index 0 = pet image label (string)
-      """
+  results_dic - Dictionary with 'key' as image filename and 'value' as a 
+  List. The list contains for following item:
+  index 0 = pet image label (string)
+  """
 
   # Creates list of files in directory
   in_files = listdir(image_dir)
+  
 
   # Processes each of the files to create a dictionary where the key
   # is the filename and the value is the picture label (below).
+  
 
   # Creates empty dictionary for the results (pet labels, etc.)
   results_dic = dict()
+  
 
   # Processes through each file in the directory, extracting only the words
   # of the file that contain the pet image label
   for idx in range(0, len(in_files), 1):
+    
 
     # Skips file if starts with . (like .DS_Store of Mac OSX) because it 
     # isn't an pet image file
     if in_files[idx][0] != ".":
+      
 
-      # Creates temporary label variable to hold pet label name extracted 
-      pet_label = ""
+      # TODO: 2a. BELOW REPLACE pass with CODE that will process each 
+      #          filename in the in_files list to extract the dog breed 
+      #          name from the filename. Recall that each filename can be
+      #          accessed by in_files[idx]. Be certain to place the 
+      #          extracted dog breed name in the variable pet_label 
+      #          that's created as an empty string ABOVE
 
-      # Split the filename into a list of words.
-      word_list = in_files[idx].split("_")
+      # Split the filename into a list of strings.
+      filename_parts = in_files[idx].split("/")
 
-      # Find the first word in the list that is alphabetic. This will be the dog breed name.
-      for word in word_list:
-        if word.isalpha():
-          pet_label += word + " "
+      # Get the last element of the list, which is the filename.
+      filename = filename_parts[-1]
 
-      # Strip any leading or trailing whitespace from the pet label.
+      # Split the filename into two parts, separated by the underscore character.
+      pet_label = filename.split("_")
+
+      # Remove any leading or trailing whitespace characters from the pet label.
       pet_label = pet_label.strip()
+
+      # Convert the pet label to all lowercase letters.
+      pet_label = pet_label.lower()
 
       # If filename doesn't already exist in dictionary add it and it's
       # pet label - otherwise print an error message because indicates 
@@ -82,5 +95,4 @@ def get_pet_labels(image_dir):
       else:
         print("** Warning: Duplicate files exist in directory:", in_files[idx])
 
-  # Returns dictionary of results (pet labels, etc.)
   return results_dic
